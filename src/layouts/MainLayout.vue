@@ -1,6 +1,28 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  const selectedKeys = ref<string[]>(['1']);
+  import { h, ref } from 'vue'
+  import type { MenuProps } from 'ant-design-vue';
+  import { RouterLink } from 'vue-router';
+  import type { RouteRecordName  } from 'vue-router';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+
+  const selectedKey: RouteRecordName | string = router.currentRoute.value.name ?? 'documents';
+
+  const selectedKeys = ref<(RouteRecordName | string) []>([selectedKey]);
+
+  const items = ref<MenuProps['items']>([
+    {
+      key: 'documents',
+      label: h(RouterLink, { to: '/' }, () => ['Документы']),
+      title: 'documents'
+    },
+    {
+      key: 'employees',
+      label: h(RouterLink, { to: '/employees' }, () => ['Сотрудники']),
+      title: 'employees'
+    }
+  ]);
 </script>
 
 <template>
@@ -12,24 +34,21 @@
         theme="dark"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">
-          <router-link to="/">Документы</router-link>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <router-link to="employees">Сотрудники</router-link>
-        </a-menu-item>
-      </a-menu>
+        :items="items"
+      />
     </a-layout-header>
     <a-layout-content>
-      <div :style="{ background: '#fff', padding: '24px', minHeight: '280px', height: '100%' }">
+      <div class="main-layout-content">
         <router-view />
       </div>
     </a-layout-content>
   </a-layout>
 </template>
 
-<style scoped>
+<style>
+  .ant-layout {
+    height: 100%;
+  }
   .ant-layout-content {
     overflow-y: auto;
   }
@@ -40,6 +59,11 @@
     @media screen and (min-width: 768px) {
       padding: 24px;
     }
+  }
+
+  .main-layout-content {
+    background: #FFFFFF;
+    padding: 24px;
   }
 
   .ant-layout-header {

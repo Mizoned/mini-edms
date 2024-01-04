@@ -1,2 +1,12 @@
 @import 'ant-design-vue/dist/reset.css';
 @import 'layouts';
+
+.ant-table-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  .ant-divider-vertical {
+    margin: 0;
+  }
+}
