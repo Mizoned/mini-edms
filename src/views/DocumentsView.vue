@@ -327,8 +327,4 @@ const handleOk = (e: MouseEvent) => {
 };
 </script>
 
-<style scoped>
-.ant-tabs-nav .ant-tabs-create-button {
-  margin-left: 16px;
-}
-</style>
+<style scoped></style>
