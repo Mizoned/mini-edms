@@ -14,7 +14,12 @@
           </template>
           <template v-if="column.key === 'action'">
             <div class="ant-table-actions">
-              <a-button class="ant-tabs-create-button" type="primary" ghost>
+              <a-button
+                @click="updateEmployeeHandler(record as Employee)"
+                class="ant-tabs-create-button"
+                type="primary"
+                ghost
+              >
                 <EditOutlined />
                 Изменить
               </a-button>
@@ -61,6 +66,7 @@
     </template>
   </a-tabs>
   <CreateUserModal />
+  <UpdateUserModal />
 </template>
 
 <script lang="ts" setup>
@@ -70,6 +76,8 @@ import type { TableColumnsType } from 'ant-design-vue'
 import CreateUserModal from '@/components/CreateUserModal.vue';
 import { useEmployeeStore } from '@/stores/employeesStore';
 import type Role from '@/modules/roles/interfaces/role';
+import type Employee from '@/modules/employees/interfaces/employee'
+import UpdateUserModal from '@/components/UpdateUserModal.vue'
 
 const employeeStore = useEmployeeStore();
 
@@ -79,6 +87,16 @@ const activeKey = ref('1');
 
 const paginationConfig = {
   pageSize: 8
+}
+
+const updateEmployeeHandler = (employee: Employee) => {
+  employeeStore.tmpUpdateEmployeeId = employee.id;
+  employeeStore.employeesUpdateForm.email = employee.email;
+  employeeStore.employeesUpdateForm.fio = employee.fio;
+  employeeStore.employeesUpdateForm.password = '';
+  employeeStore.employeesUpdateForm.roles = employee.roles.map((r: Role) => (r.value));
+
+  employeeStore.openUpdateModal();
 }
 
 const columns: TableColumnsType = [
