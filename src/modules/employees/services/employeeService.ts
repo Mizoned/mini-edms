@@ -6,6 +6,10 @@ export default class EmployeeService {
     return $api.post('/users', employee);
   }
 
+  static async update(id: number, employee: CreateEmployee) {
+    return $api.put(`/users/${id}`, employee);
+  }
+
   static async getAll() {
     return $api.get('/users');
   }
