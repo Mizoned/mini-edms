@@ -4,6 +4,10 @@
   import { RouterLink } from 'vue-router';
   import type { RouteRecordName  } from 'vue-router';
   import { useRouter } from 'vue-router';
+  import { useAuthStore } from '@/stores/authStore'
+  import { LogoutOutlined } from '@ant-design/icons-vue';
+
+  const authStore = useAuthStore();
 
   const router = useRouter();
 
@@ -28,7 +32,6 @@
 <template>
   <a-layout class="layout">
     <a-layout-header>
-      <div class="logo" />
       <a-menu
         v-model:selectedKeys="selectedKeys"
         theme="dark"
@@ -36,6 +39,16 @@
         :style="{ lineHeight: '64px' }"
         :items="items"
       />
+      <div class="a-logout">
+        <a-typography-title :level="5" style="color: white;">
+          {{ authStore.user.fio }}
+        </a-typography-title>
+        <a-button @click="authStore.logout()" shape="round" type="default">
+          <template #icon>
+            <LogoutOutlined />
+          </template>
+        </a-button>
+      </div>
     </a-layout-header>
     <a-layout-content>
       <div class="main-layout-content">
@@ -53,6 +66,10 @@
     overflow-y: auto;
   }
 
+  .ant-menu {
+    flex-grow: 1;
+  }
+
   .ant-layout-content {
     padding: 16px;
 
@@ -66,7 +83,21 @@
     padding: 24px;
   }
 
+  .a-logout {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+
+    .ant-typography {
+      margin: 0;
+    }
+  }
+
   .ant-layout-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
     padding-inline: 16px;
 
     @media screen and (min-width: 768px) {

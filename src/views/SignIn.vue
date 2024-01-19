@@ -7,7 +7,7 @@
       @finish="onFinish"
     >
       <div class="authorization__logo">
-        <img src="@/assets/images/logo.svg" alt="">
+        <a-typography-title>Vipcon</a-typography-title>
       </div>
 
       <a-form-item
@@ -106,6 +106,7 @@ const onFinish = (values: any) => {
     authStore.signIn()
       .then(() => {
           router.push({ name: 'documents' });
+        console.log('hi')
       })
       .catch((error) => {
         authForm.value?.clearValidate(Object.keys(externalErrors));

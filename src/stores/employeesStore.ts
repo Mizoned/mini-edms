@@ -7,7 +7,7 @@ interface IStore {
   isOpenModal: boolean;
   isOpenUpdateModal: boolean;
   isLoading: boolean;
-  accessToken: string;
+  user: string;
   tmpUpdateEmployeeId: number | null;
   employees: Employee[];
   employeesCreateForm: CreateEmployee;
@@ -18,7 +18,7 @@ export const useEmployeeStore = defineStore('employeeStore', {
     isOpenModal: false,
     isOpenUpdateModal: false,
     isLoading: false,
-    accessToken: '',
+    user: '',
     employees: [],
     employeesCreateForm: {
       fio: '',
