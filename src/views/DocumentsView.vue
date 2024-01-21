@@ -118,15 +118,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue'
 import { PlusOutlined, DeleteOutlined, CheckOutlined, StopOutlined, CloudDownloadOutlined } from '@ant-design/icons-vue'
 import type { TableColumnsType  } from 'ant-design-vue';
 import { useDocumentsStore } from '@/stores/documentsStore'
 import CreateDocumentModel from '@/components/CreateDocumentModel.vue'
-const fileList = ref([]);
 
 const documentStore = useDocumentsStore();
 
+
+onBeforeMount(() => {
+
+})
 documentStore.getUserDocuments();
 documentStore.getEmployees();
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { h, ref } from 'vue'
-  import type { MenuProps } from 'ant-design-vue';
+  import type { ItemType, MenuProps } from 'ant-design-vue'
   import { RouterLink } from 'vue-router';
   import type { RouteRecordName  } from 'vue-router';
   import { useRouter } from 'vue-router';
@@ -20,13 +20,30 @@
       key: 'documents',
       label: h(RouterLink, { to: '/' }, () => ['Документы']),
       title: 'documents'
-    },
-    {
+    }
+  ]);
+
+  const isAdmin = authStore?.user?.roles?.findIndex((r: { value: string }) => r.value === 'ADMIN');
+  if (isAdmin !== -1) {
+    const item: ItemType = {
       key: 'employees',
       label: h(RouterLink, { to: '/employees' }, () => ['Сотрудники']),
       title: 'employees'
-    }
-  ]);
+    };
+
+    items.value?.push(item);
+  }
+
+  const logout = () => {
+    authStore.logout()
+      .then(() => {
+        router.push({ name: 'signIn' });
+        console.log('hi')
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
 </script>
 
 <template>
@@ -43,7 +60,7 @@
         <a-typography-title :level="5" style="color: white;">
           {{ authStore.user.fio }}
         </a-typography-title>
-        <a-button @click="authStore.logout()" shape="round" type="default">
+        <a-button @click="logout" shape="round" type="default">
           <template #icon>
             <LogoutOutlined />
           </template>

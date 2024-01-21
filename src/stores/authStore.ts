@@ -11,13 +11,12 @@ interface LoginUserDto {
 export const useAuthStore = defineStore('authStore', () => {
   const isLoading = ref<boolean>(false);
   const accessToken = ref<string>('');
-  let user = ref({});
+  const user = ref({});
 
-  //TODO что-то не так с вытаскванием токена из localStorage
   const token = localStorage.getItem('accessToken') || '';
 
   if (token) {
-    user = jwtDecode(token);
+    user.value = jwtDecode(token);
   }
 
   const authForm = reactive<LoginUserDto>({
@@ -31,7 +30,7 @@ export const useAuthStore = defineStore('authStore', () => {
       .then((response) => {
         const accessToken: string = response.data.accessToken;
         setAccessToken(accessToken);
-        const user = jwtDecode(accessToken ?? '');
+        const user = jwtDecode(accessToken);
         setUser(user);
         return Promise.resolve(response);
       })
@@ -54,13 +53,19 @@ export const useAuthStore = defineStore('authStore', () => {
     user.value = obj;
   }
 
-  const logout = () => {
+  const logout = async () => {
     return AuthService.logout()
       .then((response) => {
         console.log(response);
+        user.value = {};
+        accessToken.value = '';
+        localStorage.removeItem('user');
+        localStorage.removeItem('accessToken');
+        return Promise.resolve(response);
       })
       .catch((error) => {
         console.log(error);
+        return Promise.reject(error);
       })
   }
 
