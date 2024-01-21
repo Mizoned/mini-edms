@@ -5,7 +5,7 @@ import { useEmployeeStore } from '@/stores/employeesStore'
 import { useAuthStore } from '@/stores/authStore'
 import type CreateDocument from '@/modules/documents/interfaces/createDocument'
 import type Employee from '@/modules/employees/interfaces/employee'
-import EmployeeService from '@/service/employeeService'
+import EmployeeService from '@/modules/employees/services/employeeService'
 
 interface IStore {
   authStore: any;
