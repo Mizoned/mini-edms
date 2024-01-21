@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:open="documentStore.isOpenModal"
-    title="Создать пользователя"
+    title="Создать документ"
     :footer="null"
   >
     <a-form

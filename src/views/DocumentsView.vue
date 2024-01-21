@@ -49,7 +49,7 @@
           <template v-else-if="column.key === 'action'">
             <div class="ant-table-actions">
               <a-tooltip title="Скачать документ" placement="top">
-                <a-button class="ant-tabs-create-button" type="primary" ghost>
+                <a-button class="ant-tabs-create-button" type="primary" ghost download :href="`http://localhost:3000/${record.document}`">
                   <CloudDownloadOutlined />
                 </a-button>
               </a-tooltip>
@@ -98,7 +98,7 @@
           <template v-else-if="column.key === 'action'">
             <div class="ant-table-actions">
               <a-tooltip title="Скачать документ" placement="top">
-                <a-button class="ant-tabs-create-button" type="primary" ghost>
+                <a-button class="ant-tabs-create-button" type="primary" ghost download :href="`http://localhost:3000/${record.document}`">
                   <CloudDownloadOutlined />
                 </a-button>
               </a-tooltip>
@@ -126,10 +126,6 @@ import CreateDocumentModel from '@/components/CreateDocumentModel.vue'
 
 const documentStore = useDocumentsStore();
 
-
-onBeforeMount(() => {
-
-})
 documentStore.getUserDocuments();
 documentStore.getEmployees();
 
